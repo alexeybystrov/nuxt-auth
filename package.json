@@ -24,8 +24,13 @@
   },
   "dependencies": {
     "@mdi/font": "^7.2.96",
+    "@pinia/nuxt": "^0.5.1",
     "mongoose": "^8.0.1",
+    "pinia": "^2.1.7",
     "sass": "^1.66.1",
     "vuetify": "^3.3.15"
+  },
+  "overrides": {
+    "vue": "latest"
   }
 }

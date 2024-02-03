@@ -52,7 +52,9 @@
 </template>
 
 <script setup lang="ts">
-import { loginUser, registerUser } from '~/api';
+import { useUserStore } from '@/store/user';
+
+const userStore = useUserStore();
 
 const isFormValid = ref(false);
 
@@ -87,7 +89,11 @@ const login = async () => {
     isLoading.value = true;
     errorMessage.value = '';
 
-    await loginUser({ username: username.value, password: password.value });
+    await userStore.login({
+      username: username.value,
+      password: password.value,
+    });
+    navigateTo('/account');
   } catch (error) {
     errorMessage.value = (error as Error).message;
   } finally {
@@ -101,10 +107,11 @@ const register = async () => {
       isLoading.value = true;
       errorMessage.value = '';
 
-      await registerUser({
+      await userStore.register({
         username: username.value,
         password: password.value,
       });
+      navigateTo('/account');
     } catch (error) {
       errorMessage.value = (error as Error).message;
     } finally {
