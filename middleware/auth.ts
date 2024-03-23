@@ -1,9 +1,12 @@
-import { useUserStore } from '@/store/user';
+import { verifyToken } from '~/api';
 
-export default defineNuxtRouteMiddleware(() => {
-  const userStore = useUserStore();
+export default defineNuxtRouteMiddleware(async () => {
+  const token = localStorage.getItem('token');
+  if (!token) return navigateTo('/login');
 
-  if (!userStore.isAuthenticated) {
+  try {
+    await verifyToken({ token });
+  } catch (error) {
     return navigateTo('/login');
   }
 });

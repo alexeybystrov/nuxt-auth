@@ -37,3 +37,17 @@ export const loginUser = async (params: {
     throw error;
   }
 };
+
+export const verifyToken = async (params: { token: string }) => {
+  try {
+    const response = await http.post('api/auth/verifyToken', params);
+
+    return response.data;
+  } catch (error) {
+    if ((error as AxiosError).response?.data) {
+      throw (error as AxiosError).response?.data;
+    }
+
+    throw error;
+  }
+};

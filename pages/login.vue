@@ -3,7 +3,7 @@
     <v-form v-model="isFormValid" @submit.prevent="onSubmit">
       <v-text-field
         v-model="username"
-        :rules="[required]"
+        :rules="[rules.required]"
         :readonly="isLoading"
         class="mb-2"
         label="Username"
@@ -13,7 +13,7 @@
 
       <v-text-field
         v-model="password"
-        :rules="[required]"
+        :rules="[rules.required, rules.passwordLength]"
         :readonly="isLoading"
         class="mb-2"
         label="Password"
@@ -23,7 +23,7 @@
       <v-text-field
         v-if="isRegister"
         v-model="confirmPassword"
-        :rules="[required]"
+        :rules="[rules.required]"
         :readonly="isLoading"
         label="Confirm Password"
         type="password"
@@ -70,13 +70,18 @@ const errorMessage = ref('');
 
 const isLoading = ref(false);
 
+const rules = {
+  required: (v: any) => !!v || 'Field is required',
+  passwordLength: (v: any) =>
+    (v.length >= 4 && v.length <= 10) ||
+    'Should be at least 4 and no more than 10 characters',
+};
+
 const buttonLabel = computed(() => (isRegister.value ? 'Register' : 'Login'));
 
 const footerMessage = computed(() =>
   isRegister.value ? 'Aleady have an Acoount? login.' : 'Register',
 );
-
-const required = (v: any) => !!v || 'Field is required';
 
 const onSubmit = () => {
   if (!isFormValid.value || isLoading.value) return;

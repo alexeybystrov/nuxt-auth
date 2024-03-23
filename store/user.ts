@@ -1,8 +1,6 @@
 import { loginUser, registerUser } from '~/api';
 
 export const useUserStore = defineStore('user', () => {
-  const isAuthenticated = ref(false);
-
   const login = async ({
     username,
     password,
@@ -10,12 +8,12 @@ export const useUserStore = defineStore('user', () => {
     username: string;
     password: string;
   }) => {
-    await loginUser({ username, password });
-    isAuthenticated.value = true;
+    const { token } = await loginUser({ username, password });
+    localStorage.setItem('token', token);
   };
 
   const logout = () => {
-    isAuthenticated.value = false;
+    localStorage.removeItem('token');
   };
 
   const register = async ({
@@ -25,9 +23,9 @@ export const useUserStore = defineStore('user', () => {
     username: string;
     password: string;
   }) => {
-    await registerUser({ username, password });
-    isAuthenticated.value = true;
+    const { token } = await registerUser({ username, password });
+    localStorage.setItem('token', token);
   };
 
-  return { isAuthenticated, login, logout, register };
+  return { login, logout, register };
 });
