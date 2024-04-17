@@ -25,5 +25,5 @@ export default defineEventHandler(async (event) => {
 
   const token = await sign(user._id, secret);
 
-  return { token };
+  return { userId: user._id, token };
 });

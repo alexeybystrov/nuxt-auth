@@ -51,3 +51,17 @@ export const verifyToken = async (params: { token: string }) => {
     throw error;
   }
 };
+
+export const getMeUser = async (params: { userId: string; token: string }) => {
+  try {
+    const response = await http.post('api/me', params);
+
+    return response.data;
+  } catch (error) {
+    if ((error as AxiosError).response?.data) {
+      throw (error as AxiosError).response?.data;
+    }
+
+    throw error;
+  }
+};

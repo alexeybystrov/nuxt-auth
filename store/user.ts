@@ -1,6 +1,9 @@
 import { loginUser, registerUser } from '~/api';
 
 export const useUserStore = defineStore('user', () => {
+  const cookieUserId = useCookie('userId');
+  const cookieToken = useCookie('token');
+
   const login = async ({
     username,
     password,
@@ -8,12 +11,14 @@ export const useUserStore = defineStore('user', () => {
     username: string;
     password: string;
   }) => {
-    const { token } = await loginUser({ username, password });
-    localStorage.setItem('token', token);
+    const { userId, token } = await loginUser({ username, password });
+    cookieUserId.value = userId;
+    cookieToken.value = token;
   };
 
   const logout = () => {
-    localStorage.removeItem('token');
+    cookieUserId.value = null;
+    cookieToken.value = null;
   };
 
   const register = async ({
@@ -23,8 +28,9 @@ export const useUserStore = defineStore('user', () => {
     username: string;
     password: string;
   }) => {
-    const { token } = await registerUser({ username, password });
-    localStorage.setItem('token', token);
+    const { userId, token } = await registerUser({ username, password });
+    cookieUserId.value = userId;
+    cookieToken.value = token;
   };
 
   return { login, logout, register };

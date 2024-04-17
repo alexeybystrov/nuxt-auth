@@ -1,11 +1,11 @@
 import { verifyToken } from '~/api';
 
 export default defineNuxtRouteMiddleware(async () => {
-  const token = localStorage.getItem('token');
-  if (!token) return navigateTo('/login');
+  const cookieToken = useCookie('token');
+  if (!cookieToken.value) return navigateTo('/login');
 
   try {
-    await verifyToken({ token });
+    await verifyToken({ token: cookieToken.value });
   } catch (error) {
     return navigateTo('/login');
   }
