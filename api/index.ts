@@ -38,6 +38,20 @@ export const loginUser = async (params: {
   }
 };
 
+export const loginGoogleUser = async (params: { token: string }) => {
+  try {
+    const response = await http.post('api/auth/login-google', params);
+
+    return response.data;
+  } catch (error) {
+    if ((error as AxiosError).response?.data) {
+      throw (error as AxiosError).response?.data;
+    }
+
+    throw error;
+  }
+};
+
 export const verifyToken = async (params: { token: string }) => {
   try {
     const response = await http.post('api/auth/verifyToken', params);

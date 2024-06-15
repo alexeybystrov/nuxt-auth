@@ -24,9 +24,11 @@ const handleMe = async () => {
     try {
       await getMeUser({ userId: cookieUserId.value, token: cookieToken.value });
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error('something went wrong');
     }
   } else {
+    // eslint-disable-next-line no-console
     console.error('user is not logged in');
   }
 };

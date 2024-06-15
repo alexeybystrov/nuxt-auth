@@ -1,4 +1,4 @@
-import { loginUser, registerUser } from '~/api';
+import { loginGoogleUser, loginUser, registerUser } from '~/api';
 
 export const useUserStore = defineStore('user', () => {
   const cookieUserId = useCookie('userId');
@@ -12,6 +12,12 @@ export const useUserStore = defineStore('user', () => {
     password: string;
   }) => {
     const { userId, token } = await loginUser({ username, password });
+    cookieUserId.value = userId;
+    cookieToken.value = token;
+  };
+
+  const loginGoogle = async ({ credential }: { credential: string }) => {
+    const { userId, token } = await loginGoogleUser({ token: credential });
     cookieUserId.value = userId;
     cookieToken.value = token;
   };
@@ -33,5 +39,5 @@ export const useUserStore = defineStore('user', () => {
     cookieToken.value = token;
   };
 
-  return { login, logout, register };
+  return { login, loginGoogle, logout, register };
 });

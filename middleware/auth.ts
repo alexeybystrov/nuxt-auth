@@ -7,6 +7,8 @@ export default defineNuxtRouteMiddleware(async () => {
   try {
     await verifyToken({ token: cookieToken.value });
   } catch (error) {
+    cookieToken.value = null;
+
     return navigateTo('/login');
   }
 });
