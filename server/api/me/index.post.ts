@@ -10,7 +10,7 @@ export default defineEventHandler(async (event) => {
     });
   }
 
-  const user = await User.findOne({ _id: userId }).select('-password');
+  const user = await User.findOne({ _id: userId });
   if (!user) {
     throw createError({
       statusCode: 401,
