@@ -5,6 +5,7 @@
     <v-btn @click="handleMe">ME</v-btn>
     <v-btn @click="navigateTo('/')">Home</v-btn>
     <v-btn @click="navigateTo('/about')">About</v-btn>
+    <v-btn @click="navigateTo('/posts')">Posts</v-btn>
     <v-btn @click="navigateTo('/account')">Account</v-btn>
     <v-btn @click="handleLogout">Logout</v-btn>
   </v-toolbar>

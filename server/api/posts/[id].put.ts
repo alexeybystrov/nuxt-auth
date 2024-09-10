@@ -1,4 +1,6 @@
 import { Types } from 'mongoose';
+// eslint-disable-next-line import/named
+import { v2 as cloudinary } from 'cloudinary';
 import Post from '~/server/models/Post';
 
 export default defineEventHandler(async (event) => {
@@ -13,18 +15,43 @@ export default defineEventHandler(async (event) => {
     });
   }
 
-  const { title, description } = await readBody(event);
-  const updatedPost = await Post.findByIdAndUpdate(
-    postId,
-    { title, description, updatedAt: Date.now() },
-    { new: true },
-  );
-  if (!updatedPost) {
-    throw createError({
-      statusCode: 404,
-      statusMessage: 'Post not found',
-    });
-  }
+  const { title, description, imagePath } = await readBody(event);
+  if (!imagePath) {
+    const updatedPost = await Post.findByIdAndUpdate(
+      postId,
+      { title, description, updatedAt: Date.now() },
+      { new: true },
+    );
+    if (!updatedPost) {
+      throw createError({
+        statusCode: 404,
+        statusMessage: 'Post not found',
+      });
+    }
 
-  return updatedPost;
+    return updatedPost;
+  } else {
+    const uploadResult = await cloudinary.uploader.upload(imagePath, {
+      folder: 'posts',
+    });
+    const updatedPost = await Post.findByIdAndUpdate(
+      postId,
+      {
+        title,
+        description,
+        updatedAt: Date.now(),
+        imageUrl: uploadResult.secure_url,
+        // ...(uploadResult && { imageUrl: uploadResult.secure_url }),
+      },
+      { new: true },
+    );
+    if (!updatedPost) {
+      throw createError({
+        statusCode: 404,
+        statusMessage: 'Post not found',
+      });
+    }
+
+    return updatedPost;
+  }
 });

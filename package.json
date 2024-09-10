@@ -28,6 +28,7 @@
     "@pinia/nuxt": "^0.5.1",
     "@types/google.accounts": "^0.0.14",
     "bcrypt": "^5.1.1",
+    "cloudinary": "^2.3.1",
     "google-auth-library": "^9.10.0",
     "jose": "^5.2.3",
     "mongoose": "^8.0.1",
