@@ -2,8 +2,9 @@ import Post from '~/server/models/Post';
 
 export default defineEventHandler(async (event) => {
   try {
-    const { title, description, imageUrl } = await readBody(event);
+    const { userId, title, description, imageUrl } = await readBody(event);
     const newPost = await Post.create({
+      userId,
       title,
       description,
       ...(imageUrl && { imageUrl }),
