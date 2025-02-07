@@ -79,3 +79,25 @@ export const getMeUser = async (params: { userId: string; token: string }) => {
     throw error;
   }
 };
+
+export const getAllPosts = async (
+  params: {
+    page: number;
+    pageSize: number;
+  } = {
+    page: 1,
+    pageSize: 10,
+  },
+) => {
+  try {
+    const response = await http.get('api/posts', { params });
+
+    return response.data;
+  } catch (error) {
+    if ((error as AxiosError).response?.data) {
+      throw (error as AxiosError).response?.data;
+    }
+
+    throw error;
+  }
+};

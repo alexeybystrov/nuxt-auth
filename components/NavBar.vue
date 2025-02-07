@@ -39,3 +39,11 @@ const handleLogout = () => {
   navigateTo('/login');
 };
 </script>
+
+<style scoped>
+.v-toolbar {
+  position: sticky;
+  z-index: 1000;
+  top: 0;
+}
+</style>

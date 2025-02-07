@@ -6,7 +6,7 @@ export const sign = async (id: Types.ObjectId, secret: string) => {
     id,
   };
   const iat = Math.floor(Date.now() / 1000);
-  const exp = iat + 60; // one minute
+  const exp = iat + 3600; // one hour
 
   const jwt = await new SignJWT(payload)
     .setProtectedHeader({ alg: 'HS256', typ: 'JWT' })
