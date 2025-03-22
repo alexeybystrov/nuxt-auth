@@ -1,7 +1,7 @@
 <template>
   <v-toolbar color="primary" dark>
     <v-toolbar-title class="mr-12">My App</v-toolbar-title>
-    <v-spacer></v-spacer>
+    <v-spacer />
     <v-btn @click="handleMe">ME</v-btn>
     <v-btn @click="navigateTo('/')">Home</v-btn>
     <v-btn @click="navigateTo('/about')">About</v-btn>
@@ -25,11 +25,9 @@ const handleMe = async () => {
     try {
       await getMeUser({ userId: cookieUserId.value, token: cookieToken.value });
     } catch (error) {
-      // eslint-disable-next-line no-console
       console.error('something went wrong');
     }
   } else {
-    // eslint-disable-next-line no-console
     console.error('user is not logged in');
   }
 };

@@ -1,4 +1,5 @@
 import axios, { AxiosError } from 'axios';
+import { Post } from '~/types/post';
 
 const http = axios.create({
   baseURL: 'http://localhost:3000/',
@@ -91,6 +92,20 @@ export const getAllPosts = async (
 ) => {
   try {
     const response = await http.get('api/posts', { params });
+
+    return response.data;
+  } catch (error) {
+    if ((error as AxiosError).response?.data) {
+      throw (error as AxiosError).response?.data;
+    }
+
+    throw error;
+  }
+};
+
+export const createPost = async (params: Partial<Post>) => {
+  try {
+    const response = await http.post('api/posts', params);
 
     return response.data;
   } catch (error) {

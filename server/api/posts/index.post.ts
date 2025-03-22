@@ -4,12 +4,11 @@ import Post from '~/server/models/Post';
 export default defineEventHandler(async (event) => {
   try {
     const { title, description, imageUrl } = await readBody(event);
-
-    const authHeader = getHeader(event, 'authorization');
-    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+    const token = getCookie(event, 'token');
+    if (!token) {
       throw createError({ statusCode: 401, statusMessage: 'Unauthorized' });
     }
-    const token = authHeader.split(' ')[1];
+
     const userId = await verifyToken({ token });
     if (!userId) {
       throw createError({

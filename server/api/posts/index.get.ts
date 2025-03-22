@@ -10,7 +10,10 @@ export default defineEventHandler(async (event) => {
     const limit = pageSize;
 
     const totalItems = await Post.countDocuments();
-    const posts = await Post.find().skip(skip).limit(limit);
+    const posts = await Post.find()
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(limit);
 
     return {
       page,

@@ -1,25 +1,14 @@
 import { getAllPosts } from '~/api';
+import { Post } from '~/types/post';
 
 export const usePostsStore = defineStore('posts', () => {
-  interface Post {
-    rating: number;
-    views: number;
-    likes: number;
-    _id: string;
-    title: string;
-    imageUrl: string;
-    description: string;
-    createdAt: string;
-    updatedAt: string;
-  }
-
   const posts = ref<Post[]>([]);
 
-  const getPosts = async () => {
+  const fetchPosts = async () => {
     const { items } = await getAllPosts();
 
     posts.value = items;
   };
 
-  return { posts, getPosts };
+  return { posts, fetchPosts };
 });

@@ -67,6 +67,9 @@ definePageMeta({
   middleware: ['login'],
 });
 
+const route = useRoute();
+const navigateNext = route.redirectedFrom?.fullPath || '/account';
+
 const userStore = useUserStore();
 
 const isFormValid = ref(false);
@@ -113,7 +116,7 @@ const login = async () => {
       username: username.value,
       password: password.value,
     });
-    navigateTo('/account');
+    navigateTo(navigateNext);
   } catch (error) {
     errorMessage.value = (error as Error).message;
   } finally {
@@ -131,7 +134,7 @@ const register = async () => {
         username: username.value,
         password: password.value,
       });
-      navigateTo('/account');
+      navigateTo(navigateNext);
     } catch (error) {
       errorMessage.value = (error as Error).message;
     } finally {
@@ -148,7 +151,7 @@ const handleGoogleLoginSuccess = async (response: { credential: string }) => {
   await userStore.loginGoogle({
     credential,
   });
-  navigateTo('/account');
+  navigateTo(navigateNext);
 };
 </script>
 
