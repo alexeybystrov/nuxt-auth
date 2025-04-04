@@ -15,7 +15,10 @@
 
 <script setup lang="ts">
 import { createPost } from '~/api';
+import { usePostsStore } from '~/store/posts';
 import type { Post } from '~/types/post';
+
+const postsStore = usePostsStore();
 
 definePageMeta({
   middleware: ['auth'],
@@ -29,6 +32,7 @@ const post = ref<Partial<Post>>({
 
 const addPost = async () => {
   await createPost(post.value);
+  postsStore.clearPosts();
   navigateTo('/posts');
 };
 </script>
