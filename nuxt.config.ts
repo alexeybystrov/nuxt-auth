@@ -18,6 +18,11 @@ export default defineNuxtConfig({
   nitro: {
     plugins: ['~/server/index.ts'],
   },
+  // vite: {
+  //   define: {
+  //     'process.env.DEBUG': false,
+  //   },
+  // },
   runtimeConfig: {
     mongodbUri: process.env.MONGODB_URI,
     secret: process.env.SECRET,
@@ -26,11 +31,8 @@ export default defineNuxtConfig({
     cloudinaryApiSecret: process.env.CLOUDINARY_API_SECRET,
     public: {
       googleClientId: process.env.GOOGLE_CLIENT_ID,
+      apiBaseUrl: process.env.API_BASE_URL,
     },
   },
-  // vite: {
-  //   define: {
-  //     'process.env.DEBUG': false,
-  //   },
-  // },
+  compatibilityDate: '2025-04-04',
 });

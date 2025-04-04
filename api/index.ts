@@ -1,118 +1,49 @@
-import axios, { AxiosError } from 'axios';
-import { Post } from '~/types/post';
+import type { Post } from '~/types/post';
 
-const http = axios.create({
-  baseURL: 'http://localhost:3000/',
-});
-
-export const registerUser = async (params: {
+export const registerUser = (params: {
   username: string;
   password: string;
-}) => {
-  try {
-    const response = await http.post('api/auth/register', params);
+}): Promise<any> =>
+  useApiFetch('/api/auth/register', {
+    method: 'POST',
+    body: params,
+  });
 
-    return response.data;
-  } catch (error) {
-    if ((error as AxiosError).response?.data) {
-      throw (error as AxiosError).response?.data;
-    }
-
-    throw error;
-  }
-};
-
-export const loginUser = async (params: {
+export const loginUser = (params: {
   username: string;
   password: string;
-}) => {
-  try {
-    const response = await http.post('api/auth/login', params);
+}): Promise<any> =>
+  useApiFetch('/api/auth/login', {
+    method: 'POST',
+    body: params,
+  });
 
-    return response.data;
-  } catch (error) {
-    if ((error as AxiosError).response?.data) {
-      throw (error as AxiosError).response?.data;
-    }
+export const loginGoogleUser = (params: { token: string }): Promise<any> =>
+  useApiFetch('/api/auth/login-google', {
+    method: 'POST',
+    body: params,
+  });
 
-    throw error;
-  }
-};
+export const verifyToken = (params: { token: string }) =>
+  useApiFetch('/api/auth/verifyToken', {
+    method: 'POST',
+    body: params,
+  });
 
-export const loginGoogleUser = async (params: { token: string }) => {
-  try {
-    const response = await http.post('api/auth/login-google', params);
+export const getMeUser = (params: { userId: string; token: string }) =>
+  useApiFetch('/api/me', {
+    method: 'POST',
+    body: params,
+  });
 
-    return response.data;
-  } catch (error) {
-    if ((error as AxiosError).response?.data) {
-      throw (error as AxiosError).response?.data;
-    }
+export const getAllPosts = (params = { page: 1, pageSize: 10 }): Promise<any> =>
+  useApiFetch('/api/posts', {
+    method: 'GET',
+    query: params,
+  });
 
-    throw error;
-  }
-};
-
-export const verifyToken = async (params: { token: string }) => {
-  try {
-    const response = await http.post('api/auth/verifyToken', params);
-
-    return response.data;
-  } catch (error) {
-    if ((error as AxiosError).response?.data) {
-      throw (error as AxiosError).response?.data;
-    }
-
-    throw error;
-  }
-};
-
-export const getMeUser = async (params: { userId: string; token: string }) => {
-  try {
-    const response = await http.post('api/me', params);
-
-    return response.data;
-  } catch (error) {
-    if ((error as AxiosError).response?.data) {
-      throw (error as AxiosError).response?.data;
-    }
-
-    throw error;
-  }
-};
-
-export const getAllPosts = async (
-  params: {
-    page: number;
-    pageSize: number;
-  } = {
-    page: 1,
-    pageSize: 10,
-  },
-) => {
-  try {
-    const response = await http.get('api/posts', { params });
-
-    return response.data;
-  } catch (error) {
-    if ((error as AxiosError).response?.data) {
-      throw (error as AxiosError).response?.data;
-    }
-
-    throw error;
-  }
-};
-
-export const createPost = async (params: Partial<Post>) => {
-  try {
-    const response = await http.post('api/posts', params);
-
-    return response.data;
-  } catch (error) {
-    if ((error as AxiosError).response?.data) {
-      throw (error as AxiosError).response?.data;
-    }
-
-    throw error;
-  }
-};
+export const createPost = (params: Partial<Post>) =>
+  useApiFetch('/api/posts', {
+    method: 'POST',
+    body: params,
+  });

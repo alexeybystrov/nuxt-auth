@@ -1,4 +1,4 @@
-import { verifyToken } from '~/api';
+import { useApiFetch } from '~/composables/useApiFetch';
 import User from '~/server/models/User';
 
 export default defineEventHandler(async (event) => {
@@ -18,7 +18,10 @@ export default defineEventHandler(async (event) => {
     });
   }
 
-  const isTokenValid = await verifyToken({ token });
+  const isTokenValid = await useApiFetch('/api/auth/verifyToken', {
+    method: 'POST',
+    body: { token },
+  });
   if (!isTokenValid) {
     throw createError({
       statusCode: 401,

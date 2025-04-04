@@ -15,7 +15,7 @@
 
 <script setup lang="ts">
 import { createPost } from '~/api';
-import { Post } from '~/types/post';
+import type { Post } from '~/types/post';
 
 definePageMeta({
   middleware: ['auth'],
