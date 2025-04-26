@@ -1,4 +1,5 @@
 export interface Post {
+  userId: string;
   rating: number;
   views: number;
   likes: number;

@@ -36,7 +36,15 @@ export const getMeUser = (params: { userId: string; token: string }) =>
     body: params,
   });
 
-export const getAllPosts = (params = { page: 1, pageSize: 10 }): Promise<any> =>
+export const getAllPosts = (
+  params = { page: 1, pageSize: 10 },
+): Promise<{
+  page: number;
+  pageSize: number;
+  totalItems: number;
+  totalPages: number;
+  items: Post[];
+}> =>
   useApiFetch('/api/posts', {
     method: 'GET',
     query: params,

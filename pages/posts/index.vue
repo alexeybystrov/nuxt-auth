@@ -1,5 +1,5 @@
 <template>
-  <v-infinite-scroll :items="postsStore.posts.value" @load="load">
+  <v-infinite-scroll @load="load">
     <v-container>
       <v-row>
         <v-col cols="12">
