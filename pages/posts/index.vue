@@ -27,6 +27,8 @@
         </v-col>
       </v-row>
     </v-container>
+
+    <template #empty> No more posts </template>
   </v-infinite-scroll>
 
   <v-btn
@@ -45,7 +47,11 @@ const postsStore = usePostsStore();
 const load = async ({ done }: { done: any }) => {
   await postsStore.fetchPosts();
 
-  done('ok');
+  if (postsStore.isAllPostsFetched) {
+    done('empty');
+  } else {
+    done('ok');
+  }
 };
 </script>
 

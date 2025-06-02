@@ -38,6 +38,8 @@
         </v-col>
       </v-row>
     </v-container>
+
+    <template #empty> No more posts </template>
   </v-infinite-scroll>
 </template>
 
@@ -54,7 +56,11 @@ const postsStore = usePostsStore();
 const load = async ({ done }: { done: any }) => {
   await postsStore.fetchPosts();
 
-  done('ok');
+  if (postsStore.isAllPostsFetched) {
+    done('empty');
+  } else {
+    done('ok');
+  }
 };
 
 const deletePost = async (id: string) => {
