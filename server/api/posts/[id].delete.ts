@@ -2,10 +2,20 @@ import { Types } from 'mongoose';
 import Post from '~/server/models/Post';
 
 export default defineEventHandler(async (event) => {
+  const userId = event.context.userId;
+
+  if (!userId) {
+    throw createError({
+      statusCode: 401,
+      statusMessage: 'Invalid credentials',
+    });
+  }
+
   const id = getRouterParam(event, 'id');
   const postId = Types.ObjectId.isValid(id as string)
     ? new Types.ObjectId(id as string)
     : null;
+
   if (!postId) {
     throw createError({
       statusCode: 404,
@@ -14,6 +24,7 @@ export default defineEventHandler(async (event) => {
   }
 
   const deletedPost = await Post.findByIdAndDelete(postId);
+
   if (!deletedPost) {
     throw createError({
       statusCode: 404,
