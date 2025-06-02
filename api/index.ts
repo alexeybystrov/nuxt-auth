@@ -55,3 +55,14 @@ export const createPost = (params: Partial<Post>) =>
     method: 'POST',
     body: params,
   });
+
+export const updatePostById = (id: string, params: Partial<Post>) =>
+  useApiFetch(`/api/posts/${id}`, {
+    method: 'PUT',
+    body: params,
+  });
+
+export const deletePostById = (id: string) =>
+  useApiFetch(`/api/posts/${id}`, {
+    method: 'DELETE',
+  });

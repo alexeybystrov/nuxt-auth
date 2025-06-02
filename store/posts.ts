@@ -27,5 +27,13 @@ export const usePostsStore = defineStore('posts', () => {
     allItemsCount = totalItems;
   };
 
-  return { posts, clearPosts, fetchPosts };
+  const getPostById = (id: string) => {
+    return posts.value.find((post) => post._id === id);
+  };
+
+  const deletePost = (id: string) => {
+    posts.value = posts.value.filter((post) => post._id !== id);
+  };
+
+  return { posts, clearPosts, fetchPosts, getPostById, deletePost };
 });
