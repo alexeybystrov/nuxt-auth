@@ -2,27 +2,36 @@
   <v-infinite-scroll @load="load">
     <v-container>
       <v-row justify="center">
-        <v-col cols="10">
+        <v-col>
           <v-table>
             <thead>
               <tr>
                 <th class="font-weight-bold text-left">Created at</th>
                 <th class="font-weight-bold text-left">Updated at</th>
                 <th class="font-weight-bold text-left">Title</th>
+                <th class="font-weight-bold text-left">Rating</th>
                 <th class="font-weight-bold text-left">Actions</th>
               </tr>
             </thead>
             <tbody>
               <tr v-for="post in postsStore.posts" :key="post._id">
-                <td>{{ formatDate(post.createdAt) }}</td>
-                <td>{{ formatDate(post.updatedAt) }}</td>
+                <td class="date">{{ formatDate(post.createdAt) }}</td>
+                <td class="date">{{ formatDate(post.updatedAt) }}</td>
                 <td class="title">{{ post.title }}</td>
+                <td>
+                  <v-rating
+                    :model-value="post.rating"
+                    size="small"
+                    density="comfortable"
+                    readonly
+                  />
+                </td>
                 <td>
                   <v-btn
                     color="primary"
                     size="small"
                     class="me-2"
-                    @click="navigateTo(`/posts/edit/${post._id}`)"
+                    @click="editPost(post._id)"
                     >Edit</v-btn
                   >
                   <v-btn
@@ -63,6 +72,10 @@ const load = async ({ done }: { done: any }) => {
   }
 };
 
+const editPost = (id: string) => {
+  navigateTo(`/posts/edit/${id}`);
+};
+
 const deletePost = async (id: string) => {
   await deletePostById(id);
   postsStore.deletePost(id);
@@ -74,6 +87,7 @@ const deletePost = async (id: string) => {
   min-width: 80px;
 }
 
+.date,
 .title {
   max-width: 200px;
   white-space: nowrap;
