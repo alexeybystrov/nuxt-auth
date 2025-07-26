@@ -1,6 +1,15 @@
 <template>
-  <v-infinite-scroll @load="load">
-    <v-container>
+  <v-container>
+    <v-text-field
+      v-model="searchTerm"
+      label="Search posts"
+      prepend-inner-icon="mdi-magnify"
+      clearable
+      @input="onInput"
+      @click:clear="onClear"
+    />
+
+    <v-infinite-scroll v-if="showInfiniteScroll" @load="load">
       <v-row>
         <v-col cols="12">
           <v-card
@@ -26,25 +35,34 @@
           </v-card>
         </v-col>
       </v-row>
-    </v-container>
 
-    <template #empty> No more posts </template>
-  </v-infinite-scroll>
+      <template #empty> No more posts </template>
+    </v-infinite-scroll>
 
-  <v-btn
-    class="post-button"
-    icon="mdi-plus"
-    color="primary"
-    @click="navigateTo('/posts/create')"
-  />
+    <v-btn
+      class="post-button"
+      icon="mdi-plus"
+      color="primary"
+      @click="navigateTo('/posts/create')"
+    />
+  </v-container>
 </template>
 
 <script setup lang="ts">
+import { useDebounceFn } from '@vueuse/core';
 import { usePostsStore } from '@/store/posts';
 
 const postsStore = usePostsStore();
 
+const DEBOUNCE_DELAY = 300;
+const searchTerm = ref('');
+const showInfiniteScroll = ref(true);
+
 const load = async ({ done }: { done: any }) => {
+  if (searchTerm.value) {
+    return done('empty');
+  }
+
   await postsStore.fetchPosts();
 
   if (postsStore.isAllPostsFetched) {
@@ -53,6 +71,25 @@ const load = async ({ done }: { done: any }) => {
     done('ok');
   }
 };
+
+const onInput = useDebounceFn(async () => {
+  if (searchTerm.value) {
+    await postsStore.searchPostsByTerm(searchTerm.value);
+  } else {
+    onClear();
+  }
+}, DEBOUNCE_DELAY);
+
+const onClear = () => {
+  postsStore.clearPosts();
+  showInfiniteScroll.value = false;
+
+  nextTick(() => {
+    showInfiniteScroll.value = true;
+  });
+};
+
+postsStore.clearPosts();
 </script>
 
 <style scoped>

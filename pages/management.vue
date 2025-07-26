@@ -80,6 +80,8 @@ const deletePost = async (id: string) => {
   await deletePostById(id);
   postsStore.deletePost(id);
 };
+
+postsStore.clearPosts();
 </script>
 
 <style scoped>

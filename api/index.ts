@@ -66,3 +66,14 @@ export const deletePostById = (id: string) =>
   useApiFetch(`/api/posts/${id}`, {
     method: 'DELETE',
   });
+
+export const searchPosts = (params: {
+  q: string;
+}): Promise<{
+  totalItems: number;
+  items: Post[];
+}> =>
+  useApiFetch('/api/search', {
+    method: 'GET',
+    query: params,
+  });

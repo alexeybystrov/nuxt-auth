@@ -1,4 +1,4 @@
-import { getAllPosts } from '~/api';
+import { getAllPosts, searchPosts } from '~/api';
 import type { Post } from '~/types/post';
 
 export const usePostsStore = defineStore('posts', () => {
@@ -27,6 +27,14 @@ export const usePostsStore = defineStore('posts', () => {
     allItemsCount = totalItems;
   };
 
+  const searchPostsByTerm = async (searchTerm: string) => {
+    const { items, totalItems } = await searchPosts({ q: searchTerm });
+
+    posts.value = items;
+    page = 1;
+    allItemsCount = totalItems;
+  };
+
   const isAllPostsFetched = computed(
     () => posts.value.length === allItemsCount,
   );
@@ -43,6 +51,7 @@ export const usePostsStore = defineStore('posts', () => {
     posts,
     clearPosts,
     fetchPosts,
+    searchPostsByTerm,
     isAllPostsFetched,
     getPostById,
     deletePost,

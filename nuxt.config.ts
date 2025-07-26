@@ -29,6 +29,8 @@ export default defineNuxtConfig({
     cloudinaryCloudName: process.env.CLOUDINARY_CLOUD_NAME,
     cloudinaryApiKey: process.env.CLOUDINARY_API_KEY,
     cloudinaryApiSecret: process.env.CLOUDINARY_API_SECRET,
+    elasticNode: process.env.ELASTIC_NODE,
+    elasticApiKey: process.env.ELASTIC_API_KEY,
     public: {
       googleClientId: process.env.GOOGLE_CLIENT_ID,
       apiBaseUrl: process.env.API_BASE_URL,
