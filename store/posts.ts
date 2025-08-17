@@ -47,6 +47,14 @@ export const usePostsStore = defineStore('posts', () => {
     posts.value = posts.value.filter((post) => post._id !== id);
   };
 
+  const addLike = (id: string) => {
+    const postToBeLiked = posts.value.find((post) => post._id === id);
+
+    if (postToBeLiked) {
+      postToBeLiked.likes += 1;
+    }
+  };
+
   return {
     posts,
     clearPosts,
@@ -55,5 +63,6 @@ export const usePostsStore = defineStore('posts', () => {
     isAllPostsFetched,
     getPostById,
     deletePost,
+    addLike,
   };
 });

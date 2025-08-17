@@ -25,9 +25,11 @@ const postSchema = new Schema({
 });
 
 postSchema.post('save', postSyncToElastic);
-postSchema.post('findOneAndUpdate', async function (doc) {
-  if (doc) await postSyncToElastic(doc);
-});
+
+// Trial expired :(
+// postSchema.post('findOneAndUpdate', async function (doc) {
+//   if (doc) await postSyncToElastic(doc);
+// });
 
 const Post = model('Post', postSchema);
 

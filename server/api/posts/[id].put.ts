@@ -23,7 +23,7 @@ export default defineEventHandler(async (event) => {
     });
   }
 
-  const { title, description, imageUrl } = await readBody(event);
+  const { title, description, imageUrl, likes } = await readBody(event);
   const updatedPost = await Post.findByIdAndUpdate(
     postId,
     {
@@ -31,6 +31,7 @@ export default defineEventHandler(async (event) => {
       description,
       updatedAt: Date.now(),
       ...(imageUrl && { imageUrl }),
+      ...(likes && { likes }),
     },
     { new: true },
   );

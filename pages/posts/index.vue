@@ -27,9 +27,9 @@
                 <div>
                   <v-icon color="blue">mdi-eye</v-icon> {{ post.views }}
                 </div>
-                <div>
+                <button @click="addLike(post)">
                   <v-icon color="red">mdi-heart</v-icon> {{ post.likes }}
-                </div>
+                </button>
               </div>
             </v-card-text>
           </v-card>
@@ -51,6 +51,8 @@
 <script setup lang="ts">
 import { useDebounceFn } from '@vueuse/core';
 import { usePostsStore } from '@/store/posts';
+import type { Post } from '~/types/post';
+import { updatePostById } from '~/api';
 
 const postsStore = usePostsStore();
 
@@ -87,6 +89,11 @@ const onClear = () => {
   nextTick(() => {
     showInfiniteScroll.value = true;
   });
+};
+
+const addLike = async ({ _id: id, likes }: Post) => {
+  await updatePostById(id, { likes: likes + 1 });
+  postsStore.addLike(id);
 };
 
 postsStore.clearPosts();
