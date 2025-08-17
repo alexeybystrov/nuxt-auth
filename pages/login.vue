@@ -9,7 +9,6 @@
           class="mb-2"
           label="Username"
           type="text"
-          placeholder="username"
         />
 
         <v-text-field
