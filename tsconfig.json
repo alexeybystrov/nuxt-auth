@@ -4,6 +4,12 @@
   "compilerOptions": {
     "types": [
       "google.accounts"
-    ]
+    ],
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "target": "ESNext",
+    "verbatimModuleSyntax": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true
   },
 }

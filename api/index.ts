@@ -1,4 +1,4 @@
-import type { Post } from '~/types/post';
+import type { Post } from '~/types/post.ts';
 
 export const registerUser = (params: {
   username: string;
