@@ -54,7 +54,7 @@
 
 <script setup lang="ts">
 import { usePostsStore } from '@/store/posts';
-import { deletePostById } from '~/api';
+import { deletePostById } from '~/services';
 
 definePageMeta({
   middleware: ['auth'],

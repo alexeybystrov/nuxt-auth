@@ -14,7 +14,7 @@
 
 <script setup lang="ts">
 import { useUserStore } from '@/store/user';
-import { getMeUser } from '~/api';
+import { getMeUser } from '~/services';
 
 const { logout } = useUserStore();
 

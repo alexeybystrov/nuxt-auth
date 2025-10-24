@@ -15,7 +15,7 @@
 <script setup lang="ts">
 import { useRoute, navigateTo } from '#imports';
 import PostForm from '~/components/PostForm.vue';
-import { updatePostById } from '~/api';
+import { updatePostById } from '~/services';
 import { usePostsStore } from '~/store/posts';
 import type { Post } from '~/types/post';
 

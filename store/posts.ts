@@ -1,4 +1,4 @@
-import { getAllPosts, searchPosts } from '~/api';
+import { getAllPosts, searchPosts } from '~/services';
 import type { Post } from '~/types/post';
 
 export const usePostsStore = defineStore('posts', () => {

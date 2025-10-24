@@ -10,7 +10,7 @@
 
 <script setup lang="ts">
 import PostForm from '~/components/PostForm.vue';
-import { createPost } from '~/api';
+import { createPost } from '~/services';
 import { usePostsStore } from '~/store/posts';
 import type { Post } from '~/types/post';
 

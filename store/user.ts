@@ -1,4 +1,4 @@
-import { loginGoogleUser, loginUser, registerUser } from '~/api';
+import { loginGoogleUser, loginUser, registerUser } from '~/services';
 
 export const useUserStore = defineStore('user', () => {
   const cookieUserId = useCookie('userId');

@@ -1,4 +1,4 @@
-import { verifyToken } from '~/api';
+import { verifyToken } from '~/services';
 
 export default defineNuxtRouteMiddleware(async () => {
   const cookieToken = useCookie('token');

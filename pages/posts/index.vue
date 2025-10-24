@@ -52,7 +52,7 @@
 import { useDebounceFn } from '@vueuse/core';
 import { usePostsStore } from '@/store/posts';
 import type { Post } from '~/types/post';
-import { updatePostById } from '~/api';
+import { updatePostById } from '~/services';
 
 const postsStore = usePostsStore();
 
