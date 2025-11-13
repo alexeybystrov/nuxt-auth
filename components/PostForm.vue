@@ -18,7 +18,7 @@ const emit = defineEmits<{
   (e: 'submit', post: Partial<Post>): void;
 }>();
 
-const localPost = ref<Partial<Post>>({ ...props.post });
+const localPost = ref<Partial<Post>>();
 
 const handleSubmit = () => {
   emit('submit', localPost.value);

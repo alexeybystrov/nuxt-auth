@@ -1,13 +1,13 @@
 <template>
   <v-container>
-    <v-text-field
+    <!-- <v-text-field
       v-model="searchTerm"
       label="Search posts"
       prepend-inner-icon="mdi-magnify"
       clearable
       @input="onInput"
       @click:clear="onClear"
-    />
+    /> -->
 
     <v-infinite-scroll v-if="showInfiniteScroll" @load="load">
       <v-row>
@@ -49,14 +49,14 @@
 </template>
 
 <script setup lang="ts">
-import { useDebounceFn } from '@vueuse/core';
+// import { useDebounceFn } from '@vueuse/core';
 import { usePostsStore } from '@/store/posts';
 import type { Post } from '~/types/post';
 import { updatePostById } from '~/services';
 
 const postsStore = usePostsStore();
 
-const DEBOUNCE_DELAY = 300;
+// const DEBOUNCE_DELAY = 300;
 const searchTerm = ref('');
 const showInfiniteScroll = ref(true);
 
@@ -74,22 +74,22 @@ const load = async ({ done }: { done: any }) => {
   }
 };
 
-const onInput = useDebounceFn(async () => {
-  if (searchTerm.value) {
-    await postsStore.searchPostsByTerm(searchTerm.value);
-  } else {
-    onClear();
-  }
-}, DEBOUNCE_DELAY);
+// const onInput = useDebounceFn(async () => {
+//   if (searchTerm.value) {
+//     await postsStore.searchPostsByTerm(searchTerm.value);
+//   } else {
+//     onClear();
+//   }
+// }, DEBOUNCE_DELAY);
 
-const onClear = () => {
-  postsStore.clearPosts();
-  showInfiniteScroll.value = false;
+// const onClear = () => {
+//   postsStore.clearPosts();
+//   showInfiniteScroll.value = false;
 
-  nextTick(() => {
-    showInfiniteScroll.value = true;
-  });
-};
+//   nextTick(() => {
+//     showInfiniteScroll.value = true;
+//   });
+// };
 
 const addLike = async ({ _id: id, likes }: Post) => {
   await updatePostById(id, { likes: likes + 1 });
