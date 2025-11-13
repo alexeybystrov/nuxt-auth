@@ -3,6 +3,7 @@ import { test, expect } from '@playwright/test';
 test.describe('Login Page', () => {
   test('should log in with correct credentials', async ({ page }) => {
     await page.goto('/login');
+    await page.waitForTimeout(500);
 
     // Fill username
     await page.getByLabel('Username').fill('admin');

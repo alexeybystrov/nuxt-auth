@@ -43,24 +43,24 @@ test.describe('Posts Page', () => {
         // await expect(likeButton).toBeVisible();
       }
     });
+
+    test('should load more posts on scroll', async ({ page }) => {
+      const posts = page.locator('.v-card');
+      const initialCount = await posts.count();
+
+      // Scroll down to trigger infinite scroll
+      await page.mouse.wheel(0, 2000);
+      await page.waitForTimeout(1500); // wait for loading
+
+      const newCount = await posts.count();
+      expect(newCount).toBeGreaterThan(initialCount);
+    });
+
+    // test('should navigate to create post page when clicking + button', async ({
+    //   page,
+    // }) => {
+    //   await page.click('.post-button');
+    //   await expect(page).toHaveURL('/posts/create');
+    // });
   });
-
-  test('should load more posts on scroll', async ({ page }) => {
-    const posts = page.locator('.v-card');
-    const initialCount = await posts.count();
-
-    // Scroll down to trigger infinite scroll
-    await page.mouse.wheel(0, 2000);
-    await page.waitForTimeout(1500); // wait for loading
-
-    const newCount = await posts.count();
-    expect(newCount).toBeGreaterThan(initialCount);
-  });
-
-  // test('should navigate to create post page when clicking + button', async ({
-  //   page,
-  // }) => {
-  //   await page.click('.post-button');
-  //   await expect(page).toHaveURL('/posts/create');
-  // });
 });
