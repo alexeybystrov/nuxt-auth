@@ -3,12 +3,15 @@ import { test, expect } from '@playwright/test';
 test.describe('Login Page', () => {
   test('should log in with correct credentials', async ({ page }) => {
     await page.goto('/login');
+    await page.waitForTimeout(500);
 
-    // Fill username
-    await page.getByLabel('Username').fill('admin');
+    // Fill username and trigger validation
+    const usernameField = page.getByLabel('Username');
+    await usernameField.fill('admin');
 
-    // Fill password
-    await page.getByLabel('Password').fill('admin');
+    // Fill password and trigger validation
+    const passwordField = page.getByLabel('Password');
+    await passwordField.fill('admin');
 
     // Wait until the button is enabled
     const loginButton = page.getByRole('button', { name: 'Login' });

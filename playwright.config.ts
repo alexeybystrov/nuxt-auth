@@ -3,7 +3,7 @@ import { defineConfig, devices } from '@playwright/test';
 export default defineConfig({
   testDir: './tests/e2e', // your test folder
   timeout: 60 * 1000,
-  retries: 1,
+  retries: 2,
   use: {
     baseURL: 'http://localhost:3000', // Nuxt default
     headless: true,

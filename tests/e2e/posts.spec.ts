@@ -5,44 +5,42 @@ test.describe('Posts Page', () => {
     await page.goto('/posts');
   });
 
-  test.describe('Posts Page', () => {
-    test('should render posts from API response', async ({ page }) => {
-      await page.goto('/posts');
+  test('should render posts from API response', async ({ page }) => {
+    await page.goto('/posts');
 
-      // Wait for the /api/posts response
-      const [response] = await Promise.all([
-        page.waitForResponse(
-          (res) => res.url().includes('/api/posts') && res.status() === 200,
-        ),
-        page.waitForLoadState('networkidle'),
-      ]);
+    // Wait for the /api/posts response
+    const [response] = await Promise.all([
+      page.waitForResponse(
+        (res) => res.url().includes('/api/posts') && res.status() === 200,
+      ),
+      page.waitForLoadState('networkidle'),
+    ]);
 
-      const data = await response.json();
-      expect(Array.isArray(data.items)).toBeTruthy();
-      expect(data.items.length).toBeGreaterThan(0);
+    const data = await response.json();
+    expect(Array.isArray(data.items)).toBeTruthy();
+    expect(data.items.length).toBeGreaterThan(0);
 
-      for (const [i, post] of data.items.entries()) {
-        const card = page.locator('.v-card').nth(i);
+    for (const [i, post] of data.items.entries()) {
+      const card = page.locator('.v-card').nth(i);
 
-        // Title & description
-        await expect(card.getByText(post.title)).toBeVisible();
-        await expect(card.getByText(post.description)).toBeVisible();
+      // Title & description
+      await expect(card.getByText(post.title)).toBeVisible();
+      await expect(card.getByText(post.description)).toBeVisible();
 
-        // Views → div containing the 👁 icon
-        // const viewsDiv = card
-        //   .locator('div', { has: card.locator('svg[aria-hidden="true"]') })
-        //   .filter({
-        //     hasText: post.views.toString(),
-        //   });
-        // await expect(viewsDiv).toBeVisible();
+      // Views → div containing the 👁 icon
+      // const viewsDiv = card
+      //   .locator('div', { has: card.locator('svg[aria-hidden="true"]') })
+      //   .filter({
+      //     hasText: post.views.toString(),
+      //   });
+      // await expect(viewsDiv).toBeVisible();
 
-        // Likes → button with ❤️ icon + number
-        // const likeButton = card.getByRole('button', {
-        //   name: post.likes.toString(),
-        // });
-        // await expect(likeButton).toBeVisible();
-      }
-    });
+      // Likes → button with ❤️ icon + number
+      // const likeButton = card.getByRole('button', {
+      //   name: post.likes.toString(),
+      // });
+      // await expect(likeButton).toBeVisible();
+    }
   });
 
   test('should load more posts on scroll', async ({ page }) => {
