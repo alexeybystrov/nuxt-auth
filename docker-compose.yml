@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  nuxt-auth:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      tags:
+        - nuxt-auth:latest
+    image: nuxt-auth:latest
+    container_name: nuxt-auth
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env
+    environment:
+      - NODE_ENV=production
+    restart: unless-stopped
+    networks:
+      - nuxt-network
+
+networks:
+  nuxt-network:
+    driver: bridge
+
